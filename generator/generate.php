@@ -112,7 +112,10 @@ $generate = function (array $desc) use (&$generate) {
     }
     return implode("\n", $ret);
 };
-print_r($generate($desc));
+
+$f = file_get_contents(__DIR__ . '/README.md');
+$f = str_replace('[data]', $generate($desc), $f);
+$f = file_put_contents(__DIR__ . '/../README.md', $f);
 
 
 
