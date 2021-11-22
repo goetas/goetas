@@ -1,0 +1,13 @@
+{
+    "name": "goetas/goetas",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Asmir Mustafic",
+            "email": "goetas@gmail.com"
+        }
+    ],
+    "require": {
+        "querypath/querypath": "^3.0"
+    }
+}
