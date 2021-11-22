@@ -113,6 +113,32 @@ $generate = function (array $desc) use (&$generate) {
     return implode("\n", $ret);
 };
 
+
+$generateSimple = function (array $desc) use (&$generateSimple) {
+    $ret = [];
+    foreach ($desc as $name => $data) {
+        if (is_array($data) && !isset($data['url'])) {
+            $ret[] = '- ' . $name;
+            $ret[] = indent($generateSimple($data));
+        } else {
+            $d = $data['installs'];
+            if ($d > 1000000) {
+                $d = round($d / 1000000) . "M";
+            } elseif ($d > 1000) {
+                $d = round($d / 1000) . "K";
+            }
+            $stats = "{$d}+ ⬇️, {$data['stars']} ⭐";
+            $r = "- [$name]({$data['url']}), $stats";
+            if ($data['description']) {
+                $r .= ", {$data['description']}\n";
+            }
+            $ret[] = $r;
+        }
+    }
+    return implode("\n", $ret);
+};
+echo $generateSimple($desc);
+
 $f = file_get_contents(__DIR__ . '/README.md');
 $f = str_replace('[data]', $generate($desc), $f);
 $f = file_put_contents(__DIR__ . '/../README.md', $f);
