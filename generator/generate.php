@@ -42,7 +42,7 @@ $stats = function ($name) {
 
     $tmp = sys_get_temp_dir() . "/" . md5($path);
 
-    if (!is_file($tmp) || $name == 'masterminds/html5-php') {
+    if (!is_file($tmp) || (filemtime($tmp)+(60*60*48))<time()) {
         file_put_contents($tmp, file_get_contents($path));
     }
 
